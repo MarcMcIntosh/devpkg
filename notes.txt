@@ -5,3 +5,7 @@ https://ariya.io/2016/06/isolated-development-environment-using-nix
 the resulting depkg command will need a nix-shell file
 
 using docker might be a good idea as-well, so you don't mess up your current package manager or use a tmp directory
+
+https://docker-curriculum.com/
+
+https://medium.freecodecamp.org/dockers-detached-mode-for-beginners-c53095193ee9
