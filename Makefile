@@ -1,49 +1,21 @@
-CFLAGS=-g -O2 -Wall -Wextra -Isrc -rdynamic -DNDEBUG -fsanitize=undefined $(OPTFLAGS)
-LDFLAGS=$(OPTLIBS)
-
-DESTDIR?=tmp
 PREFIX?=/usr/local
 
-SOURCES=$(wildcard src/**/*.c src/*.c)
-OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
+CFLAGS=-g -O2 -Wall -Wextra -fsanitize=undefined -I${PREFIX}/apr/include/apr-1
 
-TEST_SRC=$(wildcard tests/*_tests.c)
-TESTS=$(patsubst %.c,%,$(TEST_SRC))
+CFLAGS+=-I${PREFIX}/apr/include/apr-util-1
 
-TARGET=bin/devpkg
+LDFLAGS=-L${PREFIX}/apr/lib -lapr-1 -pthread -laprutil-1
 
-all: $(TARGET) tests
+all: devpkg
 
-dev: CFLAGS= -g -Wall -Isrc -Wall -Wextra -fsanitize=undefined $(OPTFLAGS)
-dev: all
+devpkg: bstrlib.o db.o shell.o commands.o
 
-$(TARGET): CFLAGS += -fPIC
-$(TARGET): build $(OBJECTS)
-
-build:
-	@mkdir -p build
-	@mkdir -p bin
-	@mkdir -p tmp
-
-# The unit tests
-.PHONY: tests
-tests: LDLIBS += $(TARGET)
-tests: $(TESTS)
-	sh ./tests/runtests.sh
-
-valgrind:
-	VALGRIND="valgrind --log-file=/tmp/valgrind-%p.log" $(MAKE)
-
-
-# The Cleaner
-clean: 
-	rm -rf build bin $(OBJECTS) $(TESTS)
-	rm -f tests/tests.log
-	find . -name "*.gc*" -exec rm {} \;
-	rm -rf `find . -name "*.dSYM" -print`
-
-# The install
 install: all
-	install -d $(DESTDIR) $(TESTS)
-	install $(TARGET) $(DESTDIR)/$(PREFIX)/lib/
+	install -d ${DESTDIR}/${PREFIX}/bin/
+	install -d devpkg ${DESTDIR}/${PREFIX}/bin
+
+clean:
+	rm -f *.o 
+	rm -f devpkg
+	rm -rf *.dSYM
 
