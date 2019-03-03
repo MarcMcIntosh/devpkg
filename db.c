@@ -51,7 +51,7 @@ int DB_update(const char *url)
 	FILE *db = DB_open(DB_FILE, "a+");
 	check(db, "Failed to open DB file: %s", DB_FILE);
 
-	bstring line = bfomcstr(url);
+	bstring line = bfromcstr(url);
 	bconchar(line, '\n');
 
 	int rc = fwrite(line->data, blength(line), 1, db);

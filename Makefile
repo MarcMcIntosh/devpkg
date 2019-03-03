@@ -1,10 +1,11 @@
-PREFIX?=/usr/local
+PREFIX?=/usr
+# /usr/include/apr-1.0/
 
-CFLAGS=-g -O2 -Wall -Wextra -fsanitize=undefined -I${PREFIX}/apr/include/apr-1
+CFLAGS=-g -O2 -Wall -Wextra -fsanitize=undefined -I${PREFIX}/include/apr-1.0
 
-CFLAGS+=-I${PREFIX}/apr/include/apr-util-1
+CFLAGS+=-I${PREFIX}/include/apr-util-1
 
-LDFLAGS=-L${PREFIX}/apr/lib -lapr-1 -pthread -laprutil-1
+LDFLAGS=-L${PREFIX}/lib -lapr-1 -pthread -laprutil-1
 
 all: devpkg
 
