@@ -69,11 +69,41 @@ int Command_fetch (apr_pool_t *p, const char *url, int fetch_only)
 
 		// this indicates nothing needs to be done
 		return 0;
+
+	} else if (apr_fmatch(TAR_GZ_PAT, info.path, 0) == APR_SUCCESS) {
+		
+		if (info.scheme) {
+			rc = Shell_exec(CURL_SH, "URL", url, "TARGET", TAR_GZ_SRC, NULL);
+			check(rc == 0, "Failed to curl source: %s", url);
+		}
+
+		rv = apr_dir_make_recursive(BUILD_DIR, APR_UREAD | APR_UWRITE | APR_UEXECUTE, p);
+		check(rv == APR_SUCCESS, "Failed to make directory %s", BUILD_DIR);
+
+		rc = Shell_exec(TAR_SH, "FILE", TAR_GZ_SRC, NULL);
+		check(rc == 0, "Failed to untar %s", TAR_GZ_SRC);
+
+	} else if (apr_fmatch(TAR_BZ2_PAT, info.path, 0) == APR_SUCCESS) {
+		
+		if (info.scheme) {
+			rc = Shell_exec(CURL_SH, "URL", url, "TARGET", TAR_BZ2_SRC, NULL);
+			check(rc == 0, "Curl failed");
+		}
+
+		apr_status_t rc = apr_dir_make_recursive(BUILD_DIR, APR_UREAD | APR_UWRITE | APR_UEXECUTE, p);
+
+		check(rc == 0, "Failed to make directory %s", BUILD_DIR);
+		
+		rc = Shell_exec(TAR_SH, "FILE", TAR_BZ2_SRC, NULL);
+		
+		check(rc == 0, "Failed to untar %s", TAR_BZ2_SRC);
+	} else {
+		sentinel("Don't know how to handle %s", url);
 	}
-// more to go
 
-
+	// indicates that an install need to actually run
 	return 1;
+
 error:
 	return -1;
 }
