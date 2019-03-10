@@ -107,3 +107,36 @@ int Command_fetch (apr_pool_t *p, const char *url, int fetch_only)
 error:
 	return -1;
 }
+
+int Command_build(apr_pool_t * p, const char *url, const char *configure_opts, const char *make_opts, const char *install_opts)
+{
+	int rc = 0;
+
+	check(access(BUILD_DIR, X_OK | R_OK | W_OK) == 0, "Build directory doesn't exist: %s", BUILD_DIR);
+
+	// actually do an install
+	if(access(CONFIG_SCRIPT, X_OK) == 0) {
+		log_info("Has a configure script, running it");
+		rc = Shell_exec(CONFIGURE_SH, "OPTS", configure_opts, NULL);
+		check(rc == 0, "Failed to configure.");
+	}
+
+	rc = Shell_exec(MAKE_SH, "OPTS", make_opts, NULL);
+	check(rc == 0, "Failed to build");
+
+	rc = Shell_exec(INSTALL_SH, "TARGET", install_opts ? install_opts : "install", NULL);
+	check(rc == 0, "Failed to install");
+
+	rc = Shell_exec(CLEANUP_SH, NULL);
+	check(rc == 0, "Failed to clean-up after build.");
+
+	rc = DB_update(url);
+	check(rc == 0, "Failed to add this package to the database");
+
+	return 0;
+
+error:
+	return -1;
+}
+
+
