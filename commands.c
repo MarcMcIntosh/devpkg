@@ -169,6 +169,6 @@ int Command_install(apr_pool_t *p, const char *url, const char *configure_opts, 
 	return 0;
 
 error:
-	Shell_exec(CLEARUP_SH, NULL);
+	Shell_exec(CLEANUP_SH, NULL);
 	return -1;
 }
