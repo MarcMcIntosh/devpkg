@@ -60,7 +60,7 @@ int Command_fetch (apr_pool_t *p, const char *url, int fetch_only)
 
 			check(rc == 0, "Curl failed");
 		} else {
-			depends_file = info.path
+			depends_file = info.path;
 		}
 
 		// recursively process the pevpkg list
