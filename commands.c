@@ -39,7 +39,7 @@ error:
 	return -1;
 }
 
-int Command_fetch (apr_pool_t *p, const char *url, int fetch_only)
+int Command_fetch(apr_pool_t *p, const char *url, int fetch_only)
 {
 	apr_uri_t info = {.port = 0 };
 	int rc = 0;
