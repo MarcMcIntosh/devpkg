@@ -139,7 +139,7 @@ error:
 	return -1;
 }
 
-Command_install(apr_pool_t *p, const char *url, const char *configure_opts, const char *make_opts, const char *install_opts)
+int Command_install(apr_pool_t *p, const char *url, const char *configure_opts, const char *make_opts, const char *install_opts)
 {
 	int rc = 0;
 	check(Shell_exec(CLEANUP_SH, NULL) == 0, "Failed to clean-up before building.");
