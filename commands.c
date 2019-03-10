@@ -8,7 +8,7 @@
 #include "db.h"
 #include "shell.h"
 
-int Command_depends(apr_pool *p, const char *path)
+int Command_depends(apr_pool_t *p, const char *path)
 {
 	FILE *in = NULL;
 	bstring line = NULL;
