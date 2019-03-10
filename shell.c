@@ -129,8 +129,8 @@ Shell CURL_SH = {
 };
 
 Shell CONFIGURE_SH = {
-	.dir = "/tmp/pkg-build",
 	.exe = "./congifure",
+	.dir = "/tmp/pkg-build",
 	.args = {
 		"configure",
 		"OPTS",
@@ -139,8 +139,8 @@ Shell CONFIGURE_SH = {
 };
 
 Shell MAKE_SH = {
-	.dir = "/tmp/pkg-build",
 	.exe = "make",
+	.dir = "/tmp/pkg-build",
 	.args = {
 		"make",
 		"OPTS",
@@ -149,8 +149,8 @@ Shell MAKE_SH = {
 };
 
 Shell INSTALL_SH = {
-	.dir = "/tmp/pkg-build",
 	.exe = "sudo",
+	.dir = "/tmp/pkg-build",
 	.args = {
 		"sudo",
 		"make",

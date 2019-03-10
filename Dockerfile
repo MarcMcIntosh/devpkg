@@ -6,4 +6,4 @@ RUN pacman -Sy --noconfirm gcc glibc make tar git curl apr apr-util
 
 COPY . .
 
-RUN make clean && make && ./test.sh
+RUN make clean && make && make install && ./test.sh
