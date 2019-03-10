@@ -4,11 +4,11 @@
 #include <apr_strings.h>
 #include <apr_lib.h>
 
-#include <dbg.h>
-#include <db.h>
-#include <commands.h>
+#include "dbg.h"
+#include "db.h"
+#include "commands.h"
 
-int main(int argc, const char const *argv[])
+int main(int argc, const char *argv[])
 {
 	apr_pool_t *p = NULL;
 	apr_pool_initialize();
@@ -72,6 +72,7 @@ int main(int argc, const char const *argv[])
 			check(url != NULL, "You must give a URL");
 			Command_fetch(p, url, 1);
 			log_info("Downloaded to %s and in /tmp/", BUILD_DIR);
+			break;
 
 		case COMMAND_BUILD:
 			check(url, "You must at least give a URL");

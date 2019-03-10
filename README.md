@@ -5,10 +5,11 @@ This is a project from the book [Learn C The Hard Way](http://c.learncodethehard
 The overall goal is to build a package manager with the following commands
 
 `devpkg -S ` Sets up a new installation on a computer.
-`devpkg -I ` Installs a piece of software from a URL.
+`devpkg -I [url | DEPENDS]` Installs a piece of software from a URL.
 `devpkg -L ` Lists all of the software that's been installed.
-`devpkg -F ` Fetches some source code for manual building.
+`devpkg -F [url | DEPENDS]` Fetches some source code for manual building.
 `devpkg -B ` Builds the source code and installs it, event if it's already installed.
+
 
 ## Design (from the book)
 
