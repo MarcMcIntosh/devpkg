@@ -139,4 +139,36 @@ error:
 	return -1;
 }
 
+Command_install(apr_pool_t *p, const char *url, const char *configure_opts, const char *make_opts, const char *install_opts)
+{
+	int rc = 0;
+	check(Shell_exec(CLEANUP_SH, NULL) == 0, "Failed to clean-up before building.");
 
+	rc = DB_find(url);
+	check(rc != -1, "Error checking the install database.");
+
+	if(rc == 1) {
+		log_info("Package %s already installed.", url);
+		return 0;
+	}
+
+	rc = Command_fetch(p, url, 0);
+
+	if(rc == 1) {
+		rc = Command_build(p, url, configure_opts, make_opts, install_opts);
+		check(rc == 0, "Failed to build: %s", url);
+	} else if (rc == 0) {
+		// no install needed
+		log_info("Depends successfully installed: %s", url);
+	} else {
+		// had an error
+		sentinel("Install failed: %s", url);
+	}
+
+	Shell_exec(CLEANUP_SH, NULL);
+	return 0;
+
+error:
+	Shell_exec(CLEARUP_SH, NULL);
+	return -1;
+}
