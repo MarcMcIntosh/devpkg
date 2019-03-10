@@ -16,7 +16,7 @@ int Command_depends(apr_pool_t *p, const char *path)
 	in = fopen(path, "r");
 	check(in != NULL, "Failed to open downloaded depends: %s", path);
 
-	for (line = bgets((bNgetc) fgetc, in, '\n'); line != NULL; line = bgets((bNgetc) fgetc, in '\n')) {
+	for (line = bgets((bNgetc) fgetc, in, '\n'); line != NULL; line = bgets((bNgetc) fgetc, in, '\n')) {
 		btrimws(line);
 		log_info("Processing depends: %s", bdata(line));
 		int rc = Command_install(p, bdata(line), NULL, NULL, NULL);
