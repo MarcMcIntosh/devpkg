@@ -11,8 +11,9 @@ The overall goal is to build a package manager with the following commands
 `devpkg -B ` Builds the source code and installs it, event if it's already installed.
 
 ## Recommended Usage
-#### Use inside a docker container to test if devpkg works. 
+Use inside a docker container to test if devpkg works.
 It's not recomend to have multiple package managers managing installs for the whole machine. Things will break.
+
 
 
 ## Design (from the book)
