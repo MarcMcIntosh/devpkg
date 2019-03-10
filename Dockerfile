@@ -1,9 +1,9 @@
-FROM alpine:3.7
+FROM archlinux/base:latest
 
 WORKDIR devpkg
 
-RUN apk add --no-cache build-base gcc abuild binutils apr-dev apr-util-dev git curl tar
+RUN pacman -Sy --noconfirm gcc glibc make tar git curl apr apr-util
 
 COPY . .
 
-RUN make
+RUN make clean && make
