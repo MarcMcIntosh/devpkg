@@ -70,7 +70,7 @@ int Command_fetch (apr_pool_t *p, const char *url, int fetch_only)
 		// this indicates nothing needs to be done
 		return 0;
 
-	} else if (apr_fmatch(TAR_GZ_PAT, info.path, 0) == APR_SUCCESS) {
+	} else if (apr_fnmatch(TAR_GZ_PAT, info.path, 0) == APR_SUCCESS) {
 		
 		if (info.scheme) {
 			rc = Shell_exec(CURL_SH, "URL", url, "TARGET", TAR_GZ_SRC, NULL);
