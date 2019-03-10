@@ -83,7 +83,7 @@ int Command_fetch (apr_pool_t *p, const char *url, int fetch_only)
 		rc = Shell_exec(TAR_SH, "FILE", TAR_GZ_SRC, NULL);
 		check(rc == 0, "Failed to untar %s", TAR_GZ_SRC);
 
-	} else if (apr_fmatch(TAR_BZ2_PAT, info.path, 0) == APR_SUCCESS) {
+	} else if (apr_fnmatch(TAR_BZ2_PAT, info.path, 0) == APR_SUCCESS) {
 		
 		if (info.scheme) {
 			rc = Shell_exec(CURL_SH, "URL", url, "TARGET", TAR_BZ2_SRC, NULL);
